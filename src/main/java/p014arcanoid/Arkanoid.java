@@ -1,11 +1,13 @@
 package p014arcanoid;
 
-import java.awt.*;
-import java.util.*;
-import java.util.List;
-import java.applet.*;
+import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Event;
+import java.awt.Graphics;
+import java.awt.Image;
 
 public class Arkanoid extends Applet implements Runnable{
+	private static final int SCREEN_LIMIT_Y = 300;
 	int numVidas = 5;
 	int puntuacionMax;
 	Bloque[] vidas = new Bloque[numVidas];
@@ -41,12 +43,12 @@ public class Arkanoid extends Applet implements Runnable{
 		noseve.drawLine(0, 230, 300, 230);
 		for(int f = 0; f < bloques.length; f++ )
 			for (int c = 0; c < bloques[f].length; c++) {
-				if(bloques[f][c].visible)
+				if(bloques[f][c].isVisible())
 					bloques[f][c].dibujar(noseve);	
 			}
 		noseve.setColor(Color.red);
 		for(int i = 0; i < vidas.length; i++ )
-			if(vidas[i].visible)
+			if(vidas[i].isVisible())
 				vidas[i].dibujar(noseve);
 		noseve.drawString("Puntuacion: " + puntuacion, 10, 270);
 		if(puntuacion == 6500) {
@@ -54,13 +56,13 @@ public class Arkanoid extends Applet implements Runnable{
 			if(puntuacion > puntuacionMax)
 				puntuacionMax = puntuacion;
 			noseve.drawString("ENHORABUENA CRRRRRRACK", 60, 100);
-			pelota.color = Color.black;
+			pelota.setColor(Color.black);
 		}
-		noseve.drawString("Puntuación Máxima: " + puntuacionMax, 120, 270);
+		noseve.drawString("Puntuaciï¿½n Mï¿½xima: " + puntuacionMax, 120, 270);
 		if(numVidas == 0) {
 			noseve.setColor(Color.red);
 			noseve.drawString("GAME OVER! LOOSER", 80, 100);
-			pelota.color = Color.black;
+			pelota.setColor(Color.black);
 		}
 		g.drawImage(imagen, 0, 0, this);
 	}
@@ -77,29 +79,24 @@ public class Arkanoid extends Applet implements Runnable{
 			raqueta.x = ratX;
 			for(int f = 0; f < bloques.length; f++ )
 				for (int c = 0; c < bloques[f].length; c++) {
-					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].visible == true && bloques[f][c].color == colores[4]) {
-						pelota.velY = -pelota.velY;
-						bloques[f][c].visible = false;
+					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].isVisible() == true && bloques[f][c].getColor() == colores[4]) {
+						rebounce(f, c);
 						puntuacion += 100;
 					}
-					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].visible == true && bloques[f][c].color == colores[3]) {
-						pelota.velY = -pelota.velY;
-						bloques[f][c].visible = false;
+					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].isVisible() == true && bloques[f][c].getColor() == colores[3]) {
+						rebounce(f, c);
 						puntuacion += 115;
 					}
-					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].visible == true && bloques[f][c].color == colores[2]) {
-						pelota.velY = -pelota.velY;
-						bloques[f][c].visible = false;
+					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].isVisible() == true && bloques[f][c].getColor() == colores[2]) {
+						rebounce(f, c);
 						puntuacion += 130;
 					}
-					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].visible == true && bloques[f][c].color == colores[1]) {
-						pelota.velY = -pelota.velY;
-						bloques[f][c].visible = false;
+					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].isVisible() == true && bloques[f][c].getColor() == colores[1]) {
+						rebounce(f, c);
 						puntuacion += 145;
 					}
-					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].visible == true && bloques[f][c].color == colores[0]) {
-						pelota.velY = -pelota.velY;
-						bloques[f][c].visible = false;
+					if(bloques[f][c].contains(pelota.x, pelota.y) && bloques[f][c].isVisible() == true && bloques[f][c].getColor() == colores[0]) {
+						rebounce(f, c);
 						puntuacion += 160;
 					}
 				}
@@ -114,13 +111,13 @@ public class Arkanoid extends Applet implements Runnable{
 				pelota.velY = -pelota.velY;
 				pelota.velX = -2;
 			}
-			if(pelota.y > 300) {
+			if (pelota.y > SCREEN_LIMIT_Y) {
 				pelota.y = 195;
 				pelota.x = 150;
 				pelota.velX = 0;
 				pelota.velY = 0;
 				numVidas--;
-				vidas[numVidas].visible = false;
+				vidas[numVidas].setVisible(false);
 			}if(numVidas == 0) {
 				if(puntuacion > puntuacionMax)
 					puntuacionMax = puntuacion;
@@ -133,14 +130,20 @@ public class Arkanoid extends Applet implements Runnable{
 			
 		}while(true);
 	}
+
+	private void rebounce(int f, int c) {
+		pelota.velY = -pelota.velY;
+		bloques[f][c].setVisible(false);
+	}
 	
 	public boolean mouseMove(Event e, int x, int y) {
 		if(ratX<=290) {
 			ratX = x-25;
 			return true;
-		}else 
+		} else {
 			ratX = 289;
-		return false;
+			return false;
+		}
 	}
 	
 	public boolean mouseDown(Event e, int x, int y) {
