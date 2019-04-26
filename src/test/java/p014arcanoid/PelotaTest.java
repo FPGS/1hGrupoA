@@ -43,6 +43,29 @@ public class PelotaTest {
 	}
 
 	@Test
+	void testMover() {
+		Pelota pelota2 = new Pelota(0, 0, 0, 0, Color.BLACK);
+		pelota2.velX = 10;
+		pelota2.velY = 20;
+		pelota2.mover();
+		assertEquals(10.0, pelota2.getX(), 0);
+		assertEquals(20.0, pelota2.getY(), 0);
+		assertEquals(10, pelota2.velX);
+		assertEquals(20, pelota2.velY);
+
+	}
+
+	@Test
+	void testMover2() {
+		Pelota pelota2 = new Pelota(0, 0, 0, 0, Color.BLACK);
+		int velX = GameConstants.SCREEN_LIMIT + 10;
+		pelota2.velX = velX;
+		pelota2.mover();
+		assertEquals(-velX, pelota2.velX);
+
+	}
+
+	@Test
 	void testDibujar() {
 		pelota.dibujar(g);
 		verify(g, times(1)).setColor(any());
