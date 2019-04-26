@@ -1,3 +1,4 @@
+
 package p014arcanoid;
 
 import java.awt.Color;

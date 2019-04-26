@@ -11,10 +11,12 @@ public class Pelota extends Shape {
 		super(posX, posY, anchura, altura, color);
 		this.setColor(color);
 	}
+
 	public void dibujar(Graphics g) {
 		g.setColor(getColor());
 		g.fillOval(x, y, width, height);
 	}
+
 	 public void mover() {
 		 x += velX;
 		 y += velY;
@@ -24,7 +26,5 @@ public class Pelota extends Shape {
 			velX = -velX;
 		if(y < 0)
 			velY = -velY;
-		
-		
 	 }
 }

@@ -73,6 +73,7 @@ public class Arkanoid extends Applet implements Runnable{
 		animacion = new Thread(this);
 		animacion.start();
 	}
+
 	public void run() {
 		do {
 			pelota.mover();
