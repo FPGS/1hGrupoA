@@ -6,6 +6,7 @@
 	<groupId>es.salesiasnos.edu</groupId>
 	<artifactId>1HgrupoA</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 
 
