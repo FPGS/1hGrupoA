@@ -5,6 +5,8 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.awt.Graphics;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -25,7 +27,7 @@ class ArkanoidTest {
 	@Test
 	void testStart() {
 		Thread thread = Mockito.mock(Thread.class);
-		Arkanoid arkanoidMock = Mockito.mock(Arkanoid.class);
+		Arkanoid arkanoidMock = Mockito.spy(Arkanoid.class);
 		doNothing().when(arkanoidMock).run();
 		arkanoidMock.animacion = thread;
 		arkanoidMock.start();
@@ -33,13 +35,19 @@ class ArkanoidTest {
 	}
 
 	@Test
+	void testUpdate2() {
+		Graphics g= Mockito.mock(Graphics.class);
+		arkanoid.update2(g);
+	}
+
+	@Test
 	void testVidasOfInitMethod() {
 		Arkanoid arkanoidMock = Mockito.mock(Arkanoid.class);
 		Bloque[] vidas = new Bloque[20];
-		arkanoidMock.setVidas(vidas);
+		arkanoidMock.vidas = vidas;
 		arkanoidMock.init();
 
-		for (Bloque vida : arkanoidMock.getVidas()) {
+		for (Bloque vida : arkanoidMock.vidas) {
 			assertNotNull(vida);
 		}
 	}

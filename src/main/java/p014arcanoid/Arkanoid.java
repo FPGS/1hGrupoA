@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 public class Arkanoid extends Applet implements Runnable{
 	private static final int SCREEN_LIMIT_Y = 300;
@@ -66,9 +67,14 @@ public class Arkanoid extends Applet implements Runnable{
 		}
 		g.drawImage(imagen, 0, 0, this);
 	}
-	public void update(Graphics g) {	//El metodo update se ejecuta al llamar repaint y consiste en borrar y pintar, si lo sobreescribimos ya no borra
-		paint(g);
+
+
+	public boolean update2(Graphics g) { // El metodo update se ejecuta al llamar repaint y consiste en borrar y pintar,
+		g.create();
+		Rectangle clipBounds = g.getClipBounds();
+		return clipBounds.contains(100, 200);
 	}
+
 	public void start() {
 		animacion = new Thread(this);
 		animacion.start();
