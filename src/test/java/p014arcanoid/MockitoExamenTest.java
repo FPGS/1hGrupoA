@@ -17,6 +17,7 @@ class MockitoExamenTest {
 	@Mock
 	private TypeCode typeCode;
 
+	@Mock
 	private TypeCode typeCode2;
 
 	@Test
@@ -26,7 +27,8 @@ class MockitoExamenTest {
 		when(helper.type()).thenReturn(typeCode);
 		when(typeCode.content_type()).thenReturn(typeCode2);
 		when(typeCode.default_index()).thenReturn(0);
-.mockitoEj1(helper, stream);
+
+		examen.mockitoEj1(helper, stream);
 	}
 
 
