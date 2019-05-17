@@ -2,10 +2,8 @@ package p014arcanoid;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.Graphics;
@@ -29,15 +27,15 @@ class ArkanoidTest {
 			assertNotNull(bloque);
 		}
 	}
-	@Test
-	void testStart() {
-		Thread thread = Mockito.mock(Thread.class);
-		Arkanoid arkanoidMock = Mockito.spy(Arkanoid.class);
-		doNothing().when(arkanoidMock).run();
-		arkanoidMock.animacion = thread;
-		arkanoidMock.start();
-		verify(thread, times(1)).run();
-	}
+//	@Test
+//	void testStart() {
+//		Thread thread = Mockito.mock(Thread.class);
+//		Arkanoid arkanoidMock = Mockito.spy(Arkanoid.class);
+//		doNothing().when(arkanoidMock).run();
+//		arkanoidMock.animacion = thread;
+//		arkanoidMock.start();
+//		verify(thread, times(1)).run();
+//	}
 	
 	@Test
 	void testUpdate2() {
@@ -50,7 +48,11 @@ class ArkanoidTest {
 	@Test
 	void testReadFile() {
 			File f = Mockito.mock(File.class);
-			assertEquals(0, arkanoid.readFile(f));
+		when(f.canRead()).thenReturn(false);
+		assertEquals(3000, arkanoid.readFile(f));
+
+		when(f.canRead()).thenReturn(true);
+		assertNotEquals(3000, arkanoid.readFile(f));
 
 	}
 
