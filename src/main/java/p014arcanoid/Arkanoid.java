@@ -6,6 +6,9 @@ import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.io.File;
+
+import javax.activation.FileDataSource;
 
 public class Arkanoid extends Applet implements Runnable{
 	private static final int SCREEN_LIMIT_Y = 300;
@@ -73,6 +76,15 @@ public class Arkanoid extends Applet implements Runnable{
 		g.create();
 		Rectangle clipBounds = g.getClipBounds();
 		return clipBounds.contains(100, 200);
+	}
+
+	public int readFile(File file) {
+		if (file.canRead()) {
+			FileDataSource fileInputStream = new FileDataSource(file);
+			return fileInputStream.hashCode();
+		} else {
+			return 3000;
+		}
 	}
 
 	public void start() {
