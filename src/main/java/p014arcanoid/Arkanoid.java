@@ -162,5 +162,13 @@ public class Arkanoid extends Applet implements Runnable{
 		}
 		return false;
 	}
+
+	public Bloque[] getVidas() {
+		return vidas;
+	}
+
+	public void setVidas(Bloque[] vidas) {
+		this.vidas = vidas;
+	}
 	
 }

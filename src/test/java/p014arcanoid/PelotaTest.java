@@ -3,6 +3,7 @@ package p014arcanoid;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -22,8 +23,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @RunWith(JUnitPlatform.class)
 public class PelotaTest {
 
-	@Mock
-	Graphics g;
+	@Mock Graphics g;
+
 	Pelota pelota = new Pelota(0, 0, 0, 0, null);
 
 	@Test
@@ -67,8 +68,9 @@ public class PelotaTest {
 
 	@Test
 	void testDibujar() {
+		// Graphics mock = Mockito.mock(Graphics.class);
 		pelota.dibujar(g);
-		verify(g, times(1)).setColor(any());
+		verify(g, atLeast(1)).setColor(any());
 		verify(g, times(1)).fillOval(anyInt(), anyInt(), anyInt(), anyInt());
 	}
 
